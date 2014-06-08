@@ -43,7 +43,8 @@ class User < ActiveRecord::Base
 
 	def unfollow!(other_user)
 		self.relationships.find_by(followed_id: other_user.id).destroy
-
+	end
+	
   	private
 
 	    def create_remember_token
