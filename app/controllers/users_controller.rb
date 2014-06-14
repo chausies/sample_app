@@ -18,11 +18,15 @@ class UsersController < ApplicationController
   end
 
   def create
+    @admin_user = User.find_by(id: 1)
     @user = User.new(user_params)
     if @user.save
+      unless @admin_user.nil? || !@admin_user.admin?
+        @admin_user.follow!(@user)
+      end
       sign_in @user
     	flash[:success] = "Welcome to the Sample app!"
-      	redirect_to @user
+      redirect_to @user
     else
       render 'new'
     end
